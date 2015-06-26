@@ -1,0 +1,9 @@
+#!/bin/bash
+docker stop tomcatdemo
+docker rm tomcatdemo
+newIpAdd=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' mysqldemo)
+oldIpAdd=$(grep sed run_script |cut -d "/" -f 3)
+echo $newIpAdd $oldIpAdd
+sed -i "s/${oldIpAdd}/${newIpAdd}/" run_script
+docker build -t demo/tomcat .
+docker run -it -p 8090:8080 --name tomcatdemo demo/tomcat run_script

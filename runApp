@@ -1,0 +1,12 @@
+#!/bin/bash
+service mysqld restart
+mysql -u root --password=root < script.sql
+docker stop tomcatdemo
+docker rm tomcatdemo
+newIpAdd=172.27.59.18
+oldIpAdd=$(grep sed run_script |cut -d "/" -f 3)
+echo $newIpAdd $oldIpAdd
+sed -i "s/${oldIpAdd}/${newIpAdd}/" run_script
+docker build -t demo/tomcat .
+docker run -it -p 8090:8080 --name tomcatdemo demo/tomcat run_script
+#docker run -it -p 8090:8080 --name appserver test/tomcatssh /bin/bash
