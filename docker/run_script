@@ -1,0 +1,8 @@
+#!/bin/bash
+service tomcat7 start
+cp /var/*.war /var/lib/tomcat7/webapps/
+sleep 30
+cd /var/lib/tomcat7/webapps/EmployeeApplication/WEB-INF/
+sed -i 's/localhost/172.17.0.2/' jdbc.properties
+cd
+/bin/bash
