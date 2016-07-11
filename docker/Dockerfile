@@ -1,7 +1,8 @@
-FROM ubuntu
-#MAINTAINER Bamacharan Kundu <bamacharank@cybage.com>
-RUN apt-get update && apt-get install openjdk-7-jdk ssh -y 
-RUN apt-get install tomcat7 -y
+FROM centos
+MAINTAINER Bamacharan Kundu <bamachrn@gmail.com>
+RUN yum update -y
+RUN yum install java-1.8.0-openjdk -y 
+RUN yum install tomcat -y
 #VOLUME /artifact
-ADD target/*.war /var/
+ADD EmployeeApplication.war /var/
 ADD run_script /bin/
